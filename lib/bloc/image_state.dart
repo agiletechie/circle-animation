@@ -12,7 +12,8 @@ final class ImageInitial extends ImageState {}
 final class ImageLoading extends ImageState {}
 
 final class ImageLoaded extends ImageState {
-  ImageLoaded();
+  const ImageLoaded(this.url);
+  final String url;
 }
 
 final class ImageError extends ImageState {}

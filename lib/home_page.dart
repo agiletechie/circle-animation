@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wyb_app/bloc/image_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,20 +19,29 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-      decoration:
-          const BoxDecoration(image: DecorationImage(image: NetworkImage(''))),
-      child: SafeArea(
-        child: PageView(
-          controller: _pageController,
-          children: const [
-            Page(pageNum: 0),
-            Page(pageNum: 1),
-          ],
-        ),
-      ),
-    ));
+    return BlocProvider<ImageBloc>(
+      lazy: false,
+      create: (cntext) => ImageBloc()..add(FetchImageEvent()),
+      child: Scaffold(body: BlocBuilder<ImageBloc, ImageState>(
+        builder: (context, state) {
+          return Container(
+            decoration: state is! ImageLoaded
+                ? null
+                : BoxDecoration(
+                    image: DecorationImage(image: NetworkImage(state.url))),
+            child: SafeArea(
+              child: PageView(
+                controller: _pageController,
+                children: const [
+                  Page(pageNum: 0),
+                  Page(pageNum: 1),
+                ],
+              ),
+            ),
+          );
+        },
+      )),
+    );
   }
 }
 
@@ -48,7 +59,7 @@ class _PageState extends State<Page> with TickerProviderStateMixin {
   late final List<Animation<Offset>> _animationOffsets;
 
   final List<Offset> offsets = const [
-    Offset(180, 40),
+    Offset(150, 40),
     Offset(240, 80),
     Offset(60, 200),
     Offset(240, 300),
@@ -60,7 +71,7 @@ class _PageState extends State<Page> with TickerProviderStateMixin {
       offsets.length,
       (index) {
         return AnimationController(
-            vsync: this, duration: Duration(milliseconds: ((index) + 1) * 200));
+            vsync: this, duration: Duration(milliseconds: ((index) + 1) * 400));
       },
     );
 

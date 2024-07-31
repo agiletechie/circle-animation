@@ -7,4 +7,4 @@ abstract class ImageEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchImage extends ImageEvent {}
+class FetchImageEvent extends ImageEvent {}
