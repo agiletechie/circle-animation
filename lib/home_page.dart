@@ -18,13 +18,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: PageView(
-        controller: _pageController,
-        children: const [
-          Page(pageNum: 0),
-          Page(pageNum: 1),
-        ],
+        body: Container(
+      decoration:
+          const BoxDecoration(image: DecorationImage(image: NetworkImage(''))),
+      child: SafeArea(
+        child: PageView(
+          controller: _pageController,
+          children: const [
+            Page(pageNum: 0),
+            Page(pageNum: 1),
+          ],
+        ),
       ),
     ));
   }
@@ -44,7 +48,7 @@ class _PageState extends State<Page> with TickerProviderStateMixin {
   late final List<Animation<Offset>> _animationOffsets;
 
   final List<Offset> offsets = const [
-    Offset(40, 40),
+    Offset(180, 40),
     Offset(240, 80),
     Offset(60, 200),
     Offset(240, 300),
@@ -56,7 +60,7 @@ class _PageState extends State<Page> with TickerProviderStateMixin {
       offsets.length,
       (index) {
         return AnimationController(
-            vsync: this, duration: Duration(milliseconds: (index + 1) * 200));
+            vsync: this, duration: Duration(milliseconds: ((index) + 1) * 200));
       },
     );
 
